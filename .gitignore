@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# ml model
+roberta*/
+
 # Distribution / packaging
 .Python
 build/

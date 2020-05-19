@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 
 import pytest
-from ..sentence_compare import sentence_compare
+from model.code.torch_constructor import predict_fn
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer(
+    "/workspaces/sentence-compare/model/roberta-large-nli-stsb-mean-tokens"
+)
 
 address_true = {
-    "speech": ["Speak to people in a formal way."],
+    "query": ["Speak to people in a formal way."],
     "corpus": [
         "the particulars of the place where someone lives or an organization is situated.",
         "a formal speech delivered to an audience.",
@@ -14,7 +19,7 @@ address_true = {
 }
 
 address_false = {
-    "speech": ["Where I walk to."],
+    "query": ["Where I walk to."],
     "corpus": [
         "the particulars of the place where someone lives or an organization is situated.",
         "a formal speech delivered to an audience.",
@@ -24,7 +29,7 @@ address_false = {
 }
 
 package_false = {
-    "speech": ["No Idea."],
+    "query": ["No Idea."],
     "corpus": [
         "an object or group of objects wrapped in paper or packed in a box.",
         "a set of proposals or terms offered or agreed as a whole.",
@@ -34,7 +39,7 @@ package_false = {
 }
 
 package_true = {
-    "speech": ["An item wrapped in paper."],
+    "query": ["An item wrapped in paper."],
     "corpus": [
         "a set of proposals or terms offered or agreed as a whole.",
         "put into a box or wrapping for sale or transport.",
@@ -47,14 +52,32 @@ package_true = {
 @pytest.mark.parametrize(
     ("string_input", "expected"),
     [
-        (address_true, "a formal speech delivered to an audience."),
-        (address_false, False),
-        (package_false, False),
+        (
+            address_true,
+            {"predict": True, "sentence": "a formal speech delivered to an audience."},
+        ),
+        (
+            address_false,
+            {
+                "predict": False,
+                "sentence": "write the name and address of the intended recipient on (an envelope, letter, or package).",
+            },
+        ),
+        (
+            package_false,
+            {
+                "predict": False,
+                "sentence": "a set of proposals or terms offered or agreed as a whole.",
+            },
+        ),
         (
             package_true,
-            "an object or group of objects wrapped in paper or packed in a box.",
+            {
+                "predict": True,
+                "sentence": "an object or group of objects wrapped in paper or packed in a box.",
+            },
         ),
     ],
 )
 def test_sentence_compare(string_input, expected):
-    assert sentence_compare(string_input["speech"], string_input["corpus"]) == expected
+    assert predict_fn(string_input, model) == expected

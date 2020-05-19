@@ -32,4 +32,9 @@ RUN pip install -U torch \
     scipy \
     sentence-transformers
 
+# install sagemaker and test requirements
+RUN git clone https://github.com/aws/sagemaker-python-sdk.git \
+    && pip install -U sagemaker-python-sdk/ \
+    sagemaker-python-sdk/[test]
+
 # USER ${USERNAME}
