@@ -1,0 +1,16 @@
+# docker-compose.yml
+version: "3"
+services:
+  sagemaker-notebook-container:
+    build: .
+    container_name: "${DOCKER_CONTAINER}"
+    ports:
+      - 8888:8888
+    environment:
+      AWS_PROFILE: "${AWS_PROFILE}"
+      JUPYTERLAB_SETTINGS_DIR: "${JUPYTERLAB_SETTINGS_DIR}"
+    volumes:
+      - ${AWS_CONFIG}:${DOCKER_AWS_CONFIG}:ro # For AWS Credentials
+      - ${PROJECT}:${DOCKER_PROJECT} # For git repo
+      - ${DOCKER_SOCK}:${DOCKER_SOCK}:ro # For pseudo docker-in-docker
+      - ${VOL}:${DOCKER_VOL}:rw # For jupy lab
