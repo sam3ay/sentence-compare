@@ -1,9 +1,10 @@
 # docker-compose.yml
-version: "1"
+version: "3"
 services:
   sagemaker-pytorch-notebook:
     image: ${DOCKER_IMAGE}
     container_name: "${DOCKER_CONTAINER}"
+    command: ["--no-browser"]
     ports:
       - 8888:8888
     environment:
