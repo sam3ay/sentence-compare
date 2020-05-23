@@ -1,4 +1,0 @@
-black
-scipy 
-sentence-transformers
-python-dotenv

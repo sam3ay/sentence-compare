@@ -5,6 +5,7 @@ __pycache__/
 
 # Powershell scripts
 *.ps1
+settings.json
 # C extensions
 *.so
 
