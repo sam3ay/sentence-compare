@@ -10,7 +10,9 @@ settings.json
 *.so
 
 # ml model
-roberta*/
+model/
+!model/code
+*.env
 
 # Distribution / packaging
 .Python

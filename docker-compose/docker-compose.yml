@@ -11,3 +11,5 @@ services:
       JUPYTERLAB_SETTINGS_DIR: "${JUPYTERLAB_SETTINGS_DIR}"
     volumes:
       - ${DOCKER_SOCK}:${DOCKER_SOCK}:ro # For pseudo docker-in-docker
+      - ${PROJECT}:${DOCKER_PROJECT} # Project
+      - ${JUPYTERLAB_SETTINGS_DIR}:${JUPYTERLAB_SETTINGS_DIR}
