@@ -37,7 +37,7 @@ def input_fn(serialized_input: object, content_type: str = JSON_CONTENT_TYPE) ->
     Return:
         dict: deserialized object
     """
-    logger.info(f"Deserializing the input data.")
+    logger.info(f"Deserializing the input data. {serialized_input}")
     if content_type == JSON_CONTENT_TYPE:
         input_data = json.loads(serialized_input)
         return input_data
@@ -94,7 +94,7 @@ def predict_fn(input_data: dict, model: object) -> dict:
     results = sorted(results, key=lambda x: x[1])
 
     output_dict = {
-        "predict": 1 - results[0][1] > 0.80,
+        "predict": int(1 - results[0][1] > 0.80),
         "sentence": corpus[results[0][0]],
     }
     logger.info(f"Prediction completed, similarity score {results[0][1]}")
