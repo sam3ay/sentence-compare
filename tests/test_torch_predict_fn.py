@@ -54,26 +54,26 @@ package_true = {
     [
         (
             address_true,
-            {"predict": True, "sentence": "a formal speech delivered to an audience."},
+            {"predict": 1, "sentence": "a formal speech delivered to an audience."},
         ),
         (
             address_false,
             {
-                "predict": False,
+                "predict": 0,
                 "sentence": "write the name and address of the intended recipient on (an envelope, letter, or package).",
             },
         ),
         (
             package_false,
             {
-                "predict": False,
+                "predict": 0,
                 "sentence": "a set of proposals or terms offered or agreed as a whole.",
             },
         ),
         (
             package_true,
             {
-                "predict": True,
+                "predict": 1,
                 "sentence": "an object or group of objects wrapped in paper or packed in a box.",
             },
         ),
