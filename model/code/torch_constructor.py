@@ -78,7 +78,7 @@ def predict_fn(input_data: dict, model: object) -> dict:
             with values true and a sentence if similarity score > 85%
             or false and a sentence
     """
-    logger.info("Generating String embeddings.")
+    logger.info("Generating String embeddings, from {0}".format(input_data))
     corpus = input_data["corpus"]
     corpus_embeddings = model.encode(corpus)
     query = input_data["query"]
