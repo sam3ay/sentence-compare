@@ -37,7 +37,7 @@ def input_fn(serialized_input: object, content_type: str = JSON_CONTENT_TYPE) ->
     Return:
         dict: deserialized object
     """
-    logger.info("Deserializing the input data.")
+    logger.info(f"Deserializing the input data. {serialized_input}")
     if content_type == JSON_CONTENT_TYPE:
         input_data = json.loads(serialized_input)
         return input_data
@@ -59,7 +59,7 @@ def output_fn(prediction_output: dict, accept: str = JSON_CONTENT_TYPE) -> objec
     Returns:
         object: JSON 
     """
-    logger.info("Serializing output.")
+    logger.info(f"Serializing output. {prediction_output}")
     if accept == JSON_CONTENT_TYPE:
         return json.dumps(prediction_output), accept
     raise Exception("Requested unsupported ContentType in Accept: " + accept)
@@ -78,7 +78,7 @@ def predict_fn(input_data: dict, model: object) -> dict:
             with values true and a sentence if similarity score > 85%
             or false and a sentence
     """
-    logger.info("Generating String embeddings.")
+    logger.info(f"Generating String embeddings. {input_data}")
     corpus = input_data["corpus"]
     corpus_embeddings = model.encode(corpus)
     query = input_data["query"]
@@ -97,5 +97,5 @@ def predict_fn(input_data: dict, model: object) -> dict:
         "predict": 1 - results[0][1] > 0.80,
         "sentence": corpus[results[0][0]],
     }
-    logger.info("Prediction completed, similarity score {}".format(results[0][1]))
+    logger.info(f"Prediction completed, similarity score {results[0][1]}")
     return output_dict
